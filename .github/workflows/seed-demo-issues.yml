@@ -22,4 +22,5 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python3 triage.py --all
+        # GitHub's issue list lags a few seconds behind newly created issues.
+        run: sleep 15 && python3 triage.py --all

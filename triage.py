@@ -317,6 +317,7 @@ def main():
                          if args.force or not any(MARKER in (c.get("body") or "") for c in repo.comments(i["number"])))
     else:
         sys.exit("Pass --issue N or --all")
+    print(f"{len(others)} open issue(s); triaging {targets or 'none'}", flush=True)
 
     failures = 0
     for n in targets:
