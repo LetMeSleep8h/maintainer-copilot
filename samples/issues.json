@@ -1,0 +1,26 @@
+[
+  {
+    "title": "Crash when an issue has an empty body",
+    "body": "**Steps to reproduce**\n1. Open a new issue with a title but leave the description empty.\n2. The Maintainer Copilot workflow runs.\n\n**Expected:** the issue gets triaged.\n**Actual:** the workflow fails:\n\n```\nFile \"triage.py\", line 151, in fetch_images\n    urls = IMG_MD.findall(body)\nTypeError: expected string or bytes-like object, got 'NoneType'\n```\n\nVersion: v0.3.1, Python 3.12 on the ubuntu-24.04 runner."
+  },
+  {
+    "title": "It doesn't work",
+    "body": "I added it to my repo and nothing happens. Please fix asap."
+  },
+  {
+    "title": "TypeError when someone opens an issue without a description",
+    "body": "Our bot dies with `TypeError: expected string or bytes-like object` whenever a user submits an issue that only has a title. Happens every time."
+  },
+  {
+    "title": "Typo in README: \"recieve\"",
+    "body": "In the Setup section of README.md, \"you will recieve a comment\" should be \"you will receive a comment\"."
+  },
+  {
+    "title": "Workflow fails when posting the triage comment",
+    "body": "The action ran on a new issue but failed at the end. Log below:\n\n![CI log]({{IMAGE_BASE}}/ci-403-error.png)"
+  },
+  {
+    "title": "Support GitLab issues",
+    "body": "Would love to use this on our GitLab projects too. Could the triage logic be reused with a GitLab API client and a .gitlab-ci.yml job?"
+  }
+]

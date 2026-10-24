@@ -1,0 +1,25 @@
+# Creates the six demo issues from samples/issues.json, then triages them.
+# Issues created with GITHUB_TOKEN don't trigger other workflows, so triage runs here too.
+name: Seed demo issues
+
+on: workflow_dispatch
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  seed:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create demo issues
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 seed_issues.py
+      - name: Triage them with Gemma 4
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 triage.py --all

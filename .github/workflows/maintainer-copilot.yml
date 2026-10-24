@@ -1,0 +1,36 @@
+name: Maintainer Copilot
+
+on:
+  issues:
+    types: [opened, edited, reopened]
+  workflow_dispatch:
+    inputs:
+      issue:
+        description: "Issue number (leave empty to triage every open issue not yet triaged)"
+        required: false
+
+permissions:
+  issues: write
+  contents: read
+
+concurrency:
+  group: maintainer-copilot-${{ github.event.issue.number || inputs.issue || 'all' }}
+  cancel-in-progress: true
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Triage with Gemma 4
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE: ${{ github.event.issue.number || inputs.issue }}
+        run: |
+          if [ -n "$ISSUE" ]; then
+            python3 triage.py --issue "$ISSUE"
+          else
+            python3 triage.py --all
+          fi
